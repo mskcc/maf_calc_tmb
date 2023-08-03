@@ -13,16 +13,13 @@ def get_panel_coverage_list(targets_bed_file):
     with open(targets_bed_file) as bed_file:
         for line in bed_file:
             if line.startswith('#'): continue #skip comment lines
-            # print(line)
             chromosome,spos,epos=line.split()[:3]
-            # print(chromosome,spos,epos)
             panel_list+= [chromosome+'_'+str(pos) for pos in range(int(spos),int(epos)+1)]           
     return set(panel_list)
 
 def count_on_target_mutations(maf_file,panel_set):
     mutation_set=set()
     f=open(maf_file).read().split('\n')
-    print('done reading the maf file')
     for line in f:
         if line.startswith('#'): continue #skip comment lines
         if line.startswith('Hugo_Symbol'):  continue #skip header line
